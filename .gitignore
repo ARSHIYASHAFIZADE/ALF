@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Python
+backend/*.db
+backend/data/
+*.sqlite3
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker
+docker-compose.override.yml
+
+# Temp/uploads
+/data/
+/tmp/
+uploads/
+outputs/
+
+# Test
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Misc
+*.log
+*.pid

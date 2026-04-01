@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #635bff;
+  --color-primary-light: #7c75ff;
+  --color-primary-dark: #4b44db;
+  --color-accent: #0ea5e9;
+  --color-accent-light: #38bdf8;
+  --color-bg: #09090b;
+  --color-bg-card: #111114;
+  --color-bg-card-hover: #18181b;
+  --color-surface: #1c1c21;
+  --color-text: #fafafa;
+  --color-text-dim: #71717a;
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #eab308;
+  --color-border: #27272a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
+}
+
+/* Upload zone */
+.upload-zone {
+  transition: all 0.2s ease;
+}
+.upload-zone:hover {
+  border-color: var(--color-primary);
+  background: rgba(99, 91, 255, 0.04);
+}
+.upload-zone.dragging {
+  border-color: var(--color-primary-light);
+  background: rgba(99, 91, 255, 0.08);
+}
+
+/* Format pill */
+.format-pill {
+  transition: all 0.15s ease;
+}
+.format-pill:hover {
+  border-color: var(--color-primary);
+  background: rgba(99, 91, 255, 0.08);
+}
+.format-pill.selected {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Progress bar */
+.progress-bar {
+  background: var(--color-primary);
+  transition: width 0.4s ease;
+}
+
+/* Spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
