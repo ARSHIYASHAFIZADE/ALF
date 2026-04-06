@@ -1,19 +1,25 @@
+<div align="center">
+
 # ALF — Ash Loves Files
 
-A universal file converter supporting 120+ formats across 8 categories. Free, private, no sign-up required.
+**A universal file converter supporting 120+ formats across 8 categories**
 
-**Live:** convert any image, document, audio, video, ebook, archive, data, or font file — instantly in your browser.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366f1?style=for-the-badge&logo=railway&logoColor=white)](https://frontend-production-2bfcc.up.railway.app)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+*Free · Private · No sign-up required · Files auto-deleted after 1 hour*
+
+</div>
 
 ---
 
-## Features
+## Overview
 
-- **120+ formats** across 8 categories: Image, Document, Audio, Video, Ebook, Archive, Data, Font
-- **Drag-and-drop upload** up to 100 MB
-- **Real-time progress** with file size comparison
-- **No account required** — files auto-deleted after 1 hour
-- **Format explorer** — browse all supported input/output combinations
-- **Fully containerized** — all conversion tools bundled in Docker
+Convert any file instantly in the browser. Upload a file, pick an output format, and download the result — no account, no watermark, no upload limits beyond 100 MB. All conversion tools (FFmpeg, LibreOffice, Pandoc, ImageMagick, Calibre) are bundled inside Docker so deployment requires nothing but `docker compose up`.
 
 ---
 
@@ -58,7 +64,7 @@ A universal file converter supporting 120+ formats across 8 categories. Free, pr
 ### Data
 | | Formats |
 |---|---|
-| **Input/Output** | json, yaml, toml, xml, csv, tsv, ini |
+| **Input / Output** | json, yaml, toml, xml, csv, tsv, ini |
 
 ### Font
 | | Formats |
@@ -71,36 +77,43 @@ A universal file converter supporting 120+ formats across 8 categories. Free, pr
 ## Tech Stack
 
 ### Frontend
-| | |
-|---|---|
-| **Framework** | Next.js 15 (App Router) |
-| **UI** | React 19, Tailwind CSS 4, TypeScript 5 |
+
+![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
 ### Backend
-| | |
-|---|---|
-| **Framework** | FastAPI + Uvicorn |
-| **Language** | Python 3.12 |
-| **Task Queue** | Celery + Redis |
-| **Database** | SQLite (async via SQLAlchemy + aiosqlite) |
+
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-0.30.6-499848?style=flat-square)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.35-D71F00?style=flat-square)
+![aiosqlite](https://img.shields.io/badge/aiosqlite-0.20.0-gray?style=flat-square)
+![Celery](https://img.shields.io/badge/Celery-5.4.0-37814A?style=flat-square&logo=celery&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-5.1.1-DC382D?style=flat-square&logo=redis&logoColor=white)
+![Pydantic](https://img.shields.io/badge/Pydantic-2.9.2-E92063?style=flat-square&logo=pydantic&logoColor=white)
 
 ### Conversion Tools
-| Category | Tool |
-|---|---|
-| Images | Pillow, ImageMagick (Wand) |
-| Audio / Video | FFmpeg |
-| Documents | LibreOffice, Pandoc, python-docx, python-pptx, openpyxl, PyPDF, WeasyPrint |
-| Ebooks | Calibre (`ebook-convert`) |
-| Archives | py7zr |
-| Data | PyYAML, toml, xmltodict |
-| Fonts | fontTools |
+
+| Category | Tool | Version |
+|----------|------|---------|
+| Images | Pillow | 10.4.0 |
+| Images (advanced) | Wand / ImageMagick | 0.6.13 |
+| Audio / Video | FFmpeg + ffmpeg-python | 0.2.0 |
+| Office docs | python-pptx | 1.0.2 |
+| Word docs | python-docx | 1.1.2 |
+| Spreadsheets | openpyxl | 3.1.5 |
+| PDF | PyPDF + WeasyPrint | 4.3.1 / 62.3 |
+| Ebooks | Calibre (`ebook-convert`) | CLI |
+| Archives | py7zr | 0.22.0 |
+| Data formats | PyYAML · toml · xmltodict | 6.0.2 / 0.10.2 / 0.13.0 |
+| Fonts | fontTools + Brotli + Zopfli | 4.54.1 |
 
 ### Infrastructure
-| | |
-|---|---|
-| **Containerization** | Docker + Docker Compose |
-| **Services** | `api`, `worker`, `redis`, `frontend` |
-| **Storage** | Docker volumes (`file_data`, `redis_data`) |
+
+![Docker](https://img.shields.io/badge/Docker_Compose-4_services-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Railway](https://img.shields.io/badge/Deployed_on-Railway-0B0D0E?style=flat-square&logo=railway&logoColor=white)
 
 ---
 
@@ -109,7 +122,6 @@ A universal file converter supporting 120+ formats across 8 categories. Free, pr
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) and Docker Compose
-- `make` (optional, for convenience commands)
 
 ### Run with Docker (recommended)
 
@@ -120,25 +132,26 @@ cp .env.example .env
 make dev
 ```
 
-App available at:
-- **Frontend:** http://localhost:3000
-- **Backend API:** http://localhost:8000
-- **API Docs:** http://localhost:8000/docs
+| URL | Service |
+|-----|---------|
+| http://localhost:3000 | Frontend |
+| http://localhost:8000 | Backend API |
+| http://localhost:8000/docs | Swagger UI |
 
-### Other make commands
+### Make Commands
 
 ```bash
-make up          # Run in background
-make down        # Stop all services
-make logs        # Stream all logs
-make logs-backend   # Backend logs only
-make logs-frontend  # Frontend logs only
-make clean       # Stop and remove volumes
+make dev          # Start with live logs
+make up           # Start in background
+make down         # Stop all services
+make logs         # Stream all logs
+make logs-backend # Backend logs only
+make clean        # Stop and remove volumes
 ```
 
 ### Local Development (without Docker)
 
-You'll need Redis, FFmpeg, LibreOffice, Pandoc, and Calibre installed locally.
+> Requires Redis, FFmpeg, LibreOffice, Pandoc, and Calibre installed locally.
 
 ```bash
 # Backend
@@ -147,7 +160,6 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 
 # Worker (separate terminal)
-cd backend
 celery -A app.tasks worker --loglevel=info --concurrency=2
 
 # Frontend (separate terminal)
@@ -160,7 +172,7 @@ npm run dev
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and adjust as needed:
+Copy `.env.example` to `.env`:
 
 ```env
 # Backend
@@ -185,18 +197,18 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/upload` | Upload a file and select output format |
-| `POST` | `/api/convert/{job_id}` | Start conversion for a job |
+| `POST` | `/api/upload` | Upload file + select output format |
+| `POST` | `/api/convert/{job_id}` | Start conversion |
 | `GET` | `/api/job/{job_id}` | Poll job status and progress |
-| `GET` | `/api/download/{job_id}` | Download the converted file |
+| `GET` | `/api/download/{job_id}` | Download converted file |
 
 ### Formats
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/api/formats` | All formats grouped by category |
-| `GET` | `/api/formats/{input_format}` | Available output formats for a given input |
-| `GET` | `/api/formats-list` | Flat lists of all input and output formats |
+| `GET` | `/api/formats/{input_format}` | Output formats for a given input |
+| `GET` | `/api/formats-list` | Flat lists of all input/output formats |
 
 ### Health
 
@@ -204,7 +216,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 |--------|----------|-------------|
 | `GET` | `/health` | Health check |
 
-Full interactive docs at `/docs` (Swagger) or `/redoc` when the backend is running.
+Full interactive docs at `/docs` (Swagger) when the backend is running.
 
 ---
 
@@ -233,12 +245,12 @@ ALF/
 │
 ├── backend/                     # FastAPI app
 │   ├── app/
-│   │   ├── main.py              # App setup + routes
-│   │   ├── config.py            # Settings
-│   │   ├── models.py            # ConversionJob DB model
+│   │   ├── main.py              # App setup + CORS + routes
+│   │   ├── config.py            # Settings / env
+│   │   ├── models.py            # ConversionJob SQLAlchemy model
 │   │   ├── converters/
 │   │   │   ├── base.py          # BaseConverter abstract class
-│   │   │   ├── registry.py      # Converter registry
+│   │   │   ├── registry.py      # Auto-discovery registry
 │   │   │   ├── image.py
 │   │   │   ├── document.py
 │   │   │   ├── audio_video.py
@@ -253,25 +265,36 @@ ALF/
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── docker-compose.yml
+├── docker-compose.yml           # 4 services: api, worker, redis, frontend
 ├── Makefile
 └── .env.example
 ```
 
 ---
 
-## How Conversion Works
+## How It Works
 
-1. **Upload** — file is sent to `/api/upload`, saved to disk, a `ConversionJob` record is created in SQLite
-2. **Convert** — `/api/convert/{job_id}` starts the conversion in a thread pool; progress is updated in real time
-3. **Poll** — frontend polls `/api/job/{job_id}` until status is `completed` or `failed`
+1. **Upload** — file sent to `/api/upload`, saved to disk, `ConversionJob` record created in SQLite
+2. **Convert** — `/api/convert/{job_id}` runs the converter in a thread pool with real-time progress updates
+3. **Poll** — frontend polls `/api/job/{job_id}` until `completed` or `failed`
 4. **Download** — `/api/download/{job_id}` streams the output file back
-5. **Cleanup** — files are automatically deleted after 1 hour
+5. **Cleanup** — files auto-deleted after 1 hour
 
-Each converter inherits from `BaseConverter` and is auto-registered at startup via `ConversionRegistry`. Adding a new format means creating a subclass and registering it — nothing else needs to change.
+Adding a new format: create a class inheriting `BaseConverter`, register it in `ConversionRegistry` — nothing else changes.
 
 ---
 
 ## License
 
 MIT
+
+---
+
+<div align="center">
+
+*Built with Next.js · FastAPI · Celery · Redis · Docker*
+
+[![GitHub](https://img.shields.io/badge/GitHub-ARSHIYASHAFIZADE-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ARSHIYASHAFIZADE)
+[![Live](https://img.shields.io/badge/Live-frontend--production--2bfcc.up.railway.app-6366f1?style=flat-square&logo=railway&logoColor=white)](https://frontend-production-2bfcc.up.railway.app)
+
+</div>
