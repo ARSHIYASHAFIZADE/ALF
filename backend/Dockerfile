@@ -1,18 +1,14 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV MAKEFLAGS="-j4"
 
-# Install with apt-fast for quicker builds
+# Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    python3-dev \
     pkg-config \
-    meson \
-    ninja-build \
     libmagickwand-dev \
     libcairo2-dev \
     libpango1.0-dev \
@@ -24,10 +20,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-dejavu-core \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip setuptools wheel cython
-
+# Upgrade pip and install with --prefer-binary to avoid compilation
+RUN pip install --upgrade pip setuptools wheel
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --prefer-binary -r requirements.txt
 
 COPY . .
 
