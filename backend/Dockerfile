@@ -1,26 +1,28 @@
-FROM python:3.12-slim
-
-# Install system dependencies for file conversion
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ffmpeg \
-    libreoffice \
-    pandoc \
-    imagemagick \
-    libmagickwand-dev \
-    calibre \
-    unrar \
-    fonts-liberation \
-    fonts-dejavu-core \
-    && rm -rf /var/lib/apt/lists/*
-
-# Allow ImageMagick to process PDFs
-RUN sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' /etc/ImageMagick-6/policy.xml 2>/dev/null || true
+FROM python:3.11-bookworm
 
 WORKDIR /app
 
-# Install Python dependencies
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    pkg-config \
+    libmagickwand-dev \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libgdk-pixbuf2.0-dev \
+    libffi-dev \
+    ffmpeg \
+    ghostscript \
+    p7zip-full \
+    fonts-dejavu-core \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip setuptools wheel
+
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --prefer-binary -r requirements.txt
 
 # Copy app code
 COPY . .
