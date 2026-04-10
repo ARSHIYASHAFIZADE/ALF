@@ -1,15 +1,18 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV MAKEFLAGS="-j4"
 
-# Install everything in one RUN to minimize layers and rebuild cache
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+# Install with apt-fast for quicker builds
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    python3-dev \
     pkg-config \
+    meson \
+    ninja-build \
     libmagickwand-dev \
     libcairo2-dev \
     libpango1.0-dev \
@@ -19,9 +22,9 @@ RUN apt-get update && \
     ghostscript \
     p7zip-full \
     fonts-dejavu-core \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip setuptools wheel
+RUN pip install --upgrade pip setuptools wheel cython
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
