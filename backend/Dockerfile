@@ -24,11 +24,7 @@ RUN pip install --upgrade pip setuptools wheel
 COPY requirements.txt .
 RUN pip install --prefer-binary -r requirements.txt
 
-# Copy app code
 COPY . .
-
-# Create data directories
-RUN mkdir -p /data/uploads /data/outputs
 
 EXPOSE 8000
 
