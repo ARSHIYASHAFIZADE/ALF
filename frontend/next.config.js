@@ -3,13 +3,13 @@ const nextConfig = {
   output: "standalone",
   devIndicators: false,
   env: {
-    NEXT_PUBLIC_API_URL: "https://alf-zwtq.onrender.com",
+    NEXT_PUBLIC_API_URL: "https://api-production-6cad.up.railway.app",
   },
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: "https://alf-zwtq.onrender.com/api/:path*",
+        destination: "https://api-production-6cad.up.railway.app/api/:path*",
       },
     ];
   },
