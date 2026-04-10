@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
+# System dependencies for file conversion tools
+# Removed: libgdk-pixbuf2.0-dev (not available in Debian 12)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     pkg-config \
