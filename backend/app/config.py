@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE_MB: int = 100
 
     # CORS
-    ALLOWED_ORIGINS: str = "https://alf-frontend-wqor.onrender.com,http://localhost:3000,http://localhost:3001"
+    ALLOWED_ORIGINS: str = "https://alf-frontend-3yfqcc4jd-arshiyashafizades-projects.vercel.app,https://alf-frontend-wqor.onrender.com,http://localhost:3000,http://localhost:3001"
 
     # Rate limiting
     RATE_LIMIT_PER_MINUTE: int = 20
