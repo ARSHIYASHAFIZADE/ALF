@@ -1,30 +1,19 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
-ENV PIP_NO_CACHE_DIR=1
 
-# Install build tools FIRST before any pip installs
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y ffmpeg imagemagick ghostscript && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Now install system dependencies for file conversion
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    imagemagick \
-    ghostscript \
-    libmagickwand-dev \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Upgrade pip and install dependencies
-RUN pip install --upgrade pip wheel setuptools
-
+# Upgrade pip and install Python dependencies
+RUN pip install --upgrade pip
 COPY requirements.txt .
-RUN pip install -r requirements.txt 2>&1
+RUN pip install -r requirements.txt
 
 COPY . .
 
