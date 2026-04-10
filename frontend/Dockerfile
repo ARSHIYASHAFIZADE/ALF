@@ -12,6 +12,10 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+
+# Remove TypeScript config if it exists (it should have been deleted)
+RUN rm -f next.config.ts
+
 RUN npm run build
 
 RUN npm ci --omit=dev
