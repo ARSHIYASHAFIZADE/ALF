@@ -1,26 +1,17 @@
-FROM python:3.11-bullseye
+FROM python:3.11
 
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
 
-# Install all system dependencies upfront
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     imagemagick \
     ghostscript \
-    libmagickwand-dev \
-    libpq-dev \
-    build-essential \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip first
-RUN pip install --upgrade pip setuptools wheel
-
-# Copy and install Python dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
