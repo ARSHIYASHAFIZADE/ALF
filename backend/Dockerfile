@@ -4,14 +4,25 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 
+# Install all required system packages
 RUN apt-get update && apt-get install -y \
+    build-essential \
     ffmpeg \
     imagemagick \
     ghostscript \
+    libmagickwand-dev \
+    libpq-dev \
+    zlib1g-dev \
+    libjpeg-dev \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install Python dependencies
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
