@@ -2,11 +2,14 @@
 const nextConfig = {
   output: "standalone",
   devIndicators: false,
+  env: {
+    NEXT_PUBLIC_API_URL: "https://alf-zwtq.onrender.com",
+  },
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/:path*`,
+        destination: "https://alf-zwtq.onrender.com/api/:path*",
       },
     ];
   },
