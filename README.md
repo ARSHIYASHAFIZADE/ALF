@@ -19,11 +19,11 @@
 
 ## Demo
 
-https://github.com/ARSHIYASHAFIZADE/ALF/raw/main/docs/demo.mp4
-
 <div align="center">
 
-<sub>If the video doesn't play inline, <a href="docs/demo.mp4">download it here</a>. Eight real conversions — image, document, audio, video, data, archive, ebook, font — running against the actual backend.</sub>
+![ALF demo — 8 real conversions across every category](docs/demo.gif)
+
+<sub>Eight real conversions — image, document, audio, video, data, archive, ebook, font — running end-to-end against the actual backend. <a href="docs/demo.mp4">Download the MP4</a> for higher quality.</sub>
 
 </div>
 
