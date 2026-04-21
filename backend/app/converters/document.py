@@ -2,9 +2,21 @@ import asyncio
 import os
 import subprocess
 import shutil
+import sys
 from pathlib import Path
 from typing import Optional, Callable, Any
 from app.converters.base import BaseConverter
+
+
+def _find_weasyprint() -> Optional[str]:
+    # Prefer weasyprint in the same bin dir as the running Python (venv).
+    # Falls back to PATH lookup when installed system-wide.
+    here = Path(sys.executable).parent
+    for name in ("weasyprint", "weasyprint.exe"):
+        cand = here / name
+        if cand.exists():
+            return str(cand)
+    return shutil.which("weasyprint")
 
 
 class DocumentConverter(BaseConverter):
@@ -77,7 +89,13 @@ class DocumentConverter(BaseConverter):
         cmd = ["pandoc", str(input_path), "-f", in_fmt, "-t", out_fmt, "-o", str(output_path)]
 
         if out == "pdf":
-            cmd.extend(["--pdf-engine=weasyprint"])
+            # pandoc locates pdf-engine via PATH, so fall back to an absolute
+            # path when weasyprint is only installed inside the Python venv.
+            weasy = _find_weasyprint()
+            cmd.extend([f"--pdf-engine={weasy or 'weasyprint'}"])
+            # weasyprint requires a non-empty <title>; supply a default so the
+            # conversion doesn't fail when the source has no title metadata
+            cmd.extend(["--metadata", f"title={input_path.stem}"])
 
         def _run():
             result = subprocess.run(cmd, capture_output=True)

@@ -27,6 +27,8 @@ class AudioConverter(BaseConverter):
         "mp3", "wav", "flac", "aac", "ogg", "wma", "m4a",
         "aiff", "aif", "opus", "amr", "ac3", "dts", "ape",
         "wv", "mka", "ra", "mid", "midi",
+        # video formats — ffmpeg strips video via -vn and keeps the audio track
+        "mp4", "mkv", "mov", "avi", "webm", "flv", "m4v", "3gp",
     ]
 
     supported_output_formats = [

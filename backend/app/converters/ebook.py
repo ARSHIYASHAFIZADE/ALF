@@ -1,4 +1,5 @@
 import asyncio
+import os
 import subprocess
 import shutil
 from pathlib import Path
@@ -39,8 +40,22 @@ class EbookConverter(BaseConverter):
 
         cmd = [ebook_convert, str(input_path), str(output_path)]
 
+        # Calibre's shebang resolves `env python3` through PATH, so if a
+        # pyenv/venv shim sits ahead of /usr/bin the wrong interpreter runs
+        # (and Calibre's C-extension deps like msgpack go missing). Put
+        # system python first, and force a UTF-8 locale so the translation
+        # layer finds its message catalogs.
+        system_path = "/usr/local/bin:/usr/bin:/bin"
+        existing = os.environ.get("PATH", "")
+        env = {
+            **os.environ,
+            "PATH": f"{system_path}:{existing}" if existing else system_path,
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+        }
+
         def _run():
-            result = subprocess.run(cmd, capture_output=True)
+            result = subprocess.run(cmd, capture_output=True, env=env)
             if result.returncode != 0:
                 raise RuntimeError(f"Calibre conversion failed: {result.stderr.decode()[-500:]}")
 

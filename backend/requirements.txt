@@ -25,6 +25,9 @@ openpyxl==3.1.5
 pypdf==4.3.1
 markdown==3.7
 weasyprint==62.3
+pydyf==0.10.0
+pymupdf==1.24.14
+pdf2docx==0.5.8
 
 # File conversion - Data formats
 PyYAML==6.0.2
