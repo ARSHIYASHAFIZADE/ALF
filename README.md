@@ -17,6 +17,18 @@
 
 ---
 
+## Demo
+
+https://github.com/ARSHIYASHAFIZADE/ALF/raw/main/docs/demo.mp4
+
+<div align="center">
+
+<sub>If the video doesn't play inline, <a href="docs/demo.mp4">download it here</a>. Eight real conversions — image, document, audio, video, data, archive, ebook, font — running against the actual backend.</sub>
+
+</div>
+
+---
+
 ## Overview
 
 Convert any file instantly in the browser. Upload a file, pick an output format, and download the result — no account, no watermark, no upload limits beyond 100 MB. All conversion tools (FFmpeg, LibreOffice, Pandoc, ImageMagick, Calibre) are bundled inside Docker so deployment requires nothing but `docker compose up`.
