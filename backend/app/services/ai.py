@@ -95,24 +95,47 @@ def _preview_image(path: Path) -> str:
     try:
         from PIL import Image, ExifTags
         img = Image.open(str(path))
+        w, h = img.width, img.height
+        ratio = w / h if h else 0
+        orientation = "landscape" if ratio > 1.2 else ("portrait" if ratio < 0.83 else "square")
+        has_alpha = img.mode in ("RGBA", "LA", "PA") or (img.mode == "P" and "transparency" in img.info)
+
         info = [
-            f"Image · {img.format}",
-            f"Size: {img.width}×{img.height} px",
-            f"Mode: {img.mode}",
+            f"Image · {img.format or path.suffix.lstrip('.').upper()}",
+            f"Dimensions: {w}×{h} px ({orientation})",
+            f"Colour mode: {img.mode}{'  (has transparency)' if has_alpha else ''}",
         ]
+
+        # Dominant colours via quantise
+        try:
+            small = img.convert("RGB").resize((80, 80), Image.LANCZOS)
+            quantised = small.quantize(colors=5, method=Image.Quantize.MEDIANCUT)
+            palette = quantised.getpalette()[:15]
+            colours = [f"#{palette[i*3]:02x}{palette[i*3+1]:02x}{palette[i*3+2]:02x}" for i in range(5)]
+            info.append(f"Dominant colours: {', '.join(colours)}")
+        except Exception:
+            pass
+
+        # File size / compression hint
+        size_kb = path.stat().st_size / 1024
+        bpp = (path.stat().st_size * 8) / (w * h) if w * h else 0
+        info.append(f"File size: {size_kb:.1f} KB  ({bpp:.2f} bits/pixel)")
+
         # EXIF where available
         try:
             exif = img.getexif()
             named = {ExifTags.TAGS.get(k, k): v for k, v in exif.items() if k in ExifTags.TAGS}
             interesting = {
                 k: named[k]
-                for k in ("Make", "Model", "DateTime", "ExposureTime", "ISOSpeedRatings", "FNumber", "FocalLength", "GPSInfo")
+                for k in ("Make", "Model", "DateTime", "ExposureTime", "ISOSpeedRatings",
+                          "FNumber", "FocalLength", "Software", "Artist", "Copyright")
                 if k in named
             }
             if interesting:
-                info.append("EXIF: " + ", ".join(f"{k}={v}" for k, v in interesting.items()))
+                info.append("EXIF: " + ", ".join(f"{k}={v}" for k, v in list(interesting.items())[:6]))
         except Exception:
             pass
+
         return "\n".join(info)
     except Exception as e:
         return f"(image preview failed: {e})"
@@ -256,30 +279,30 @@ def extract_preview(path: Path, input_format: str, category: str) -> str:
 
 SYSTEM_PROMPT = """You are the AI assistant inside Ash Loves Files (ALF), a universal file converter.
 
-Given a file's metadata and a content preview, produce a JSON response with these fields:
+Given a file's metadata and content preview, return a JSON object with EXACTLY these fields:
 
 {
-  "summary": "2-3 sentence plain-English description of what's in the file. Reference concrete details (topic, style, duration, dimensions, number of pages/items, genre, etc.) when visible.",
+  "summary": "2-3 punchy sentences that tell the user what is actually IN the file. Be specific: mention the subject matter, visual content, colour palette, topic, duration, page count, author, bitrate, compression ratio, number of records — whatever concrete detail is visible in the preview. Do NOT just repeat the format name or dimensions. Imagine you are describing the file to someone who cannot see it.",
   "recommended": {
-    "format": "one of the available_output_formats — the single best choice",
-    "reason": "ONE short sentence (max 14 words) on why"
+    "format": "the single best output format from available_output_formats",
+    "reason": "one crisp sentence (max 14 words) explaining the USE CASE this serves"
   },
   "alternatives": [
-    {"format": "another available_output_format", "reason": "short sentence (max 14 words)"},
-    {"format": "another one", "reason": "short sentence (max 14 words)"}
+    {"format": "second best format", "reason": "max 14 words"},
+    {"format": "third best format", "reason": "max 14 words"}
   ],
   "tips": [
-    "one short gotcha or quality note the user should know (max 16 words)",
-    "another short tip if relevant"
+    "one actionable gotcha or quality note (max 18 words)",
+    "a second tip if there is a meaningful one"
   ],
-  "suggested_filename": "descriptive-lowercase-filename-without-extension"
+  "suggested_filename": "content-aware-kebab-case-name-no-extension"
 }
 
 Rules:
-- You MUST pick formats strictly from the available_output_formats list.
-- Recommendations should reflect the likely USE CASE (editing vs archiving vs sharing vs web vs print).
-- Suggested filename should be kebab-case, descriptive, 2-6 words, NO extension.
-- Respond with the JSON object only — no prose before or after, no markdown fences."""
+- formats MUST come from available_output_formats — never invent one.
+- summary must reference the actual file content (colours, topic, people, data, etc.) not just metadata.
+- suggested_filename: 2-6 words, kebab-case, describes what's in the file (e.g. "q1-financial-report", "mountain-landscape", "kubernetes-deployment-config").
+- Respond with the JSON object only — no prose, no markdown fences."""
 
 
 def analyze(
