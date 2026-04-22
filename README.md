@@ -21,9 +21,9 @@
 
 <div align="center">
 
-![ALF demo — 22 conversions across every category, with AI insights](docs/demo.gif)
+![ALF demo — 21 real conversions across all 8 categories with AI insight card](docs/demo.gif)
 
-<sub>22 real conversions — image, document, audio, video, data, archive, ebook, font — each preceded by a live AI content summary and format recommendation. <a href="docs/demo.mp4">Download the full captioned MP4</a> (3 MB, 3 min).</sub>
+<sub>21 real conversions across all 8 categories — each preceded by a live AI content summary and format recommendation. <a href="docs/demo.mp4">Download the full captioned MP4</a> (7 MB, 4 min).</sub>
 
 </div>
 
