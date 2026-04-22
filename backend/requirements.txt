@@ -50,3 +50,6 @@ aiofiles==24.1.0
 httpx==0.27.2
 pydantic==2.9.2
 pydantic-settings==2.5.2
+
+# AI — Groq-hosted Llama for file analysis + format recommendations
+groq==1.2.0

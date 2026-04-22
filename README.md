@@ -21,11 +21,29 @@
 
 <div align="center">
 
-![ALF demo — 8 real conversions across every category](docs/demo.gif)
+![ALF demo — 22 conversions across every category, with AI insights](docs/demo.gif)
 
-<sub>Eight real conversions — image, document, audio, video, data, archive, ebook, font — running end-to-end against the actual backend. <a href="docs/demo.mp4">Download the MP4</a> for higher quality.</sub>
+<sub>22 real conversions — image, document, audio, video, data, archive, ebook, font — each preceded by a live AI content summary and format recommendation. <a href="docs/demo.mp4">Download the full captioned MP4</a> (3 MB, 3 min).</sub>
 
 </div>
+
+## AI Insights
+
+Every upload is analysed by Llama 3.3 (Groq) before you pick a format. The assistant reads the file, summarises what it contains, and recommends the output format that best fits your likely use case — with a one-line reason and alternatives you can pick with one click.
+
+<div align="center">
+  <img src="docs/ai-insight.png" alt="AI Smart Insight card showing summary, recommended format, alternatives, tips, and a suggested filename" width="560">
+</div>
+
+The card surfaces five things per file:
+
+- **Content summary** — PDF page count, audio bitrate, EPUB title, zip manifest, font glyph count, image EXIF
+- **Recommended format** with a ≤14-word justification (the big CTA button)
+- **Alternatives** — two ranked fallbacks, each with their own reason
+- **Heads-up tips** — format-specific gotchas ("TIFF → JPG loses transparency", "Low-bitrate audio won't improve on re-encode")
+- **Suggested filename** — a content-aware kebab-case rename for your output
+
+Set `GROQ_API_KEY` in `backend/.env` (free tier at https://console.groq.com) to enable it.
 
 ---
 
@@ -116,11 +134,12 @@ Convert any file instantly in the browser. Upload a file, pick an output format,
 | Office docs | python-pptx | 1.0.2 |
 | Word docs | python-docx | 1.1.2 |
 | Spreadsheets | openpyxl | 3.1.5 |
-| PDF | PyPDF + WeasyPrint | 4.3.1 / 62.3 |
+| PDF | PyPDF + WeasyPrint + PyMuPDF + pdf2docx | 4.3.1 / 62.3 / 1.24 / 0.5.8 |
 | Ebooks | Calibre (`ebook-convert`) | CLI |
 | Archives | py7zr | 0.22.0 |
 | Data formats | PyYAML · toml · xmltodict | 6.0.2 / 0.10.2 / 0.13.0 |
 | Fonts | fontTools + Brotli + Zopfli | 4.54.1 |
+| AI insights | Groq (Llama 3.3 70B) | 1.2.0 |
 
 ### Infrastructure
 
@@ -213,6 +232,13 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 | `POST` | `/api/convert/{job_id}` | Start conversion |
 | `GET` | `/api/job/{job_id}` | Poll job status and progress |
 | `GET` | `/api/download/{job_id}` | Download converted file |
+
+### AI
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/ai/analyze-upload` | Inspect a file without creating a job — returns summary, recommended format, alternatives, tips, suggested filename |
+| `POST` | `/api/ai/analyze/{job_id}` | Same analysis for an already-uploaded job |
 
 ### Formats
 

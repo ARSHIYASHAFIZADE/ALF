@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     # Cleanup
     CLEANUP_AFTER_HOURS: int = 1
 
+    # AI — Groq for file analysis / format recommendation
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+
     class Config:
         env_file = ".env"
         extra = "ignore"

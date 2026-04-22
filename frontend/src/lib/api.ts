@@ -92,6 +92,46 @@ export async function getOutputFormats(
   return res.json();
 }
 
+export interface AIInsightResponse {
+  jobId: string;
+  category: string;
+  inputFormat: string;
+  availableOutputFormats: string[];
+  preview: string;
+  summary?: string;
+  recommended?: { format: string; reason: string };
+  alternatives?: { format: string; reason: string }[];
+  tips?: string[];
+  suggested_filename?: string;
+  model?: string;
+  error?: string;
+}
+
+export async function getAIInsight(jobId: string): Promise<AIInsightResponse> {
+  const res = await fetch(`${API_BASE}/api/ai/analyze/${jobId}`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "AI analysis failed" }));
+    throw new Error(err.detail || "AI analysis failed");
+  }
+  return res.json();
+}
+
+export async function analyzeUpload(file: File): Promise<AIInsightResponse> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await fetch(`${API_BASE}/api/ai/analyze-upload`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "AI analysis failed" }));
+    throw new Error(err.detail || "AI analysis failed");
+  }
+  return res.json();
+}
+
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B";
   const k = 1024;

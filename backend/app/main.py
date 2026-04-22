@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import init_db
-from app.routers import upload, convert, formats
+from app.routers import upload, convert, formats, ai
 
 
 @asynccontextmanager
@@ -36,6 +36,7 @@ app.add_middleware(
 app.include_router(upload.router)
 app.include_router(convert.router)
 app.include_router(formats.router)
+app.include_router(ai.router)
 
 
 @app.get("/")

@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Header from "@/components/Header";
 import UploadZone from "@/components/UploadZone";
 import FileInfo from "@/components/FileInfo";
+import AIInsight from "@/components/AIInsight";
 import FormatPicker from "@/components/FormatPicker";
 import ConversionProgress from "@/components/ConversionProgress";
 import FormatExplorer from "@/components/FormatExplorer";
@@ -133,6 +134,13 @@ export default function Home() {
             {step === "format" && file && (
               <div className="space-y-4">
                 <FileInfo file={file} onRemove={handleRemoveFile} />
+
+                <AIInsight
+                  file={file}
+                  inputFormat={inputFormat}
+                  selectedFormat={selectedFormat}
+                  onSelectFormat={handleFormatSelect}
+                />
 
                 <FormatPicker
                   inputFormat={inputFormat}
