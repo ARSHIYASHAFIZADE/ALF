@@ -4,14 +4,13 @@
 
 **A universal file converter supporting 120+ formats across 8 categories**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366f1?style=for-the-badge&logo=railway&logoColor=white)](https://frontend-production-2bfcc.up.railway.app)
 [![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-*Free · Private · No sign-up required · Files auto-deleted after 1 hour*
+*Free · Private · No sign-up · Files auto-deleted after 1 hour*
 
 </div>
 
@@ -23,13 +22,15 @@
 
 ![ALF demo — 21 real conversions across all 8 categories with AI insight card](docs/demo.gif)
 
-<sub>21 real conversions across all 8 categories — each preceded by a live AI content summary and format recommendation. <a href="docs/demo.mp4">Download the full captioned MP4</a> (7 MB, 4 min).</sub>
+<sub>21 real conversions across all 8 categories — each preceded by a live AI content summary and format recommendation. <a href="docs/demo.mp4">Download the full MP4</a> (8 MB, 4 min).</sub>
 
 </div>
 
+---
+
 ## AI Insights
 
-Every upload is analysed by Llama 3.3 (Groq) before you pick a format. The assistant reads the file, summarises what it contains, and recommends the output format that best fits your likely use case — with a one-line reason and alternatives you can pick with one click.
+Every upload is analysed by Llama 3.3 70B (via Groq) before you pick a format. The assistant reads the actual content of the file — not just its extension — and recommends the output format that best fits your likely use case.
 
 <div align="center">
   <img src="docs/ai-insight.png" alt="AI Smart Insight card showing summary, recommended format, alternatives, tips, and a suggested filename" width="560">
@@ -37,19 +38,25 @@ Every upload is analysed by Llama 3.3 (Groq) before you pick a format. The assis
 
 The card surfaces five things per file:
 
-- **Content summary** — PDF page count, audio bitrate, EPUB title, zip manifest, font glyph count, image EXIF
-- **Recommended format** with a ≤14-word justification (the big CTA button)
+- **Content summary** — what's actually in the file: subject matter, dominant colours, page count, audio bitrate, EPUB title, archive manifest, font glyph count, data schema
+- **Recommended format** with a one-line justification (pre-selects the format pill)
 - **Alternatives** — two ranked fallbacks, each with their own reason
-- **Heads-up tips** — format-specific gotchas ("TIFF → JPG loses transparency", "Low-bitrate audio won't improve on re-encode")
-- **Suggested filename** — a content-aware kebab-case rename for your output
+- **Tips** — format-specific gotchas ("TIFF → JPG loses transparency", "low-bitrate audio won't improve on re-encode")
+- **Suggested filename** — a content-aware kebab-case rename for the output file
 
-Set `GROQ_API_KEY` in `backend/.env` (free tier at https://console.groq.com) to enable it.
+Set `GROQ_API_KEY` in `backend/.env` to enable it. Free tier available at [console.groq.com](https://console.groq.com).
 
 ---
 
-## Overview
+## Features
 
-Convert any file instantly in the browser. Upload a file, pick an output format, and download the result — no account, no watermark, no upload limits beyond 100 MB. All conversion tools (FFmpeg, LibreOffice, Pandoc, ImageMagick, Calibre) are bundled inside Docker so deployment requires nothing but `docker compose up`.
+- **120+ formats** across 8 categories — image, document, audio, video, data, archive, ebook, font
+- **AI-powered insight** before every conversion — Llama 3.3 70B reads the file and recommends the right format
+- **Drag-and-drop upload** with real-time conversion progress
+- **No account required** — upload, convert, download
+- **Privacy-first** — files are deleted from the server after 1 hour
+- **100 MB upload limit** (configurable)
+- **Self-hostable** — one `docker compose up` starts everything
 
 ---
 
@@ -58,49 +65,49 @@ Convert any file instantly in the browser. Upload a file, pick an output format,
 ### Image
 | | Formats |
 |---|---|
-| **Input** | png, jpg, gif, bmp, tiff, webp, ico, psd, pcx, tga, ppm, pgm, pbm, heic, heif, avif, svg, eps, raw, cr2, nef, arw, dng, orf, rw2 |
-| **Output** | png, jpg, gif, bmp, tiff, webp, ico, pdf, eps, pcx, tga, ppm |
+| **Input** | `png` `jpg` `gif` `bmp` `tiff` `webp` `ico` `psd` `pcx` `tga` `ppm` `pgm` `pbm` `heic` `heif` `avif` `svg` `eps` `raw` `cr2` `nef` `arw` `dng` `orf` `rw2` |
+| **Output** | `png` `jpg` `gif` `bmp` `tiff` `webp` `ico` `pdf` `eps` `pcx` `tga` `ppm` |
 
 ### Document
 | | Formats |
 |---|---|
-| **Input** | pdf, docx, doc, xlsx, xls, pptx, ppt, odt, ods, odp, rtf, txt, html, md, csv, tsv, tex, epub, xml |
-| **Output** | pdf, docx, xlsx, pptx, odt, ods, odp, rtf, txt, html, csv, md, epub, tex |
+| **Input** | `pdf` `docx` `doc` `xlsx` `xls` `pptx` `ppt` `odt` `ods` `odp` `rtf` `txt` `html` `md` `csv` `tsv` `tex` `epub` `xml` |
+| **Output** | `pdf` `docx` `xlsx` `pptx` `odt` `ods` `odp` `rtf` `txt` `html` `csv` `md` `epub` `tex` |
 
 ### Audio
 | | Formats |
 |---|---|
-| **Input** | mp3, wav, flac, aac, ogg, wma, m4a, aiff, opus, amr, ac3, dts, ape, mid |
-| **Output** | mp3, wav, flac, aac, ogg, m4a, aiff, opus, ac3, wma |
+| **Input** | `mp3` `wav` `flac` `aac` `ogg` `wma` `m4a` `aiff` `opus` `amr` `ac3` `dts` `ape` `mid` |
+| **Output** | `mp3` `wav` `flac` `aac` `ogg` `m4a` `aiff` `opus` `ac3` `wma` |
 
 ### Video
 | | Formats |
 |---|---|
-| **Input** | mp4, avi, mkv, mov, wmv, flv, webm, mpeg, 3gp, m4v, vob, ts, mts, ogv, asf, rm |
-| **Output** | mp4, avi, mkv, mov, webm, gif, mpeg, 3gp, m4v, ts, flv, ogv |
+| **Input** | `mp4` `avi` `mkv` `mov` `wmv` `flv` `webm` `mpeg` `3gp` `m4v` `vob` `ts` `mts` `ogv` `asf` `rm` |
+| **Output** | `mp4` `avi` `mkv` `mov` `webm` `gif` `mpeg` `3gp` `m4v` `ts` `flv` `ogv` |
 
 ### Ebook
 | | Formats |
 |---|---|
-| **Input** | epub, mobi, azw3, azw, fb2, lit, pdb, lrf, cbz, cbr |
-| **Output** | epub, mobi, azw3, fb2, pdf, txt, html, docx, rtf |
+| **Input** | `epub` `mobi` `azw3` `azw` `fb2` `lit` `pdb` `lrf` `cbz` `cbr` |
+| **Output** | `epub` `mobi` `azw3` `fb2` `pdf` `txt` `html` `docx` `rtf` |
 
 ### Archive
 | | Formats |
 |---|---|
-| **Input** | zip, tar, gz, tgz, bz2, tbz2, xz, 7z, rar |
-| **Output** | zip, tar, gz, tgz, bz2, xz, 7z |
+| **Input** | `zip` `tar` `gz` `tgz` `bz2` `tbz2` `xz` `7z` `rar` |
+| **Output** | `zip` `tar` `gz` `tgz` `bz2` `xz` `7z` |
 
 ### Data
 | | Formats |
 |---|---|
-| **Input / Output** | json, yaml, toml, xml, csv, tsv, ini |
+| **Input / Output** | `json` `yaml` `toml` `xml` `csv` `tsv` `ini` |
 
 ### Font
 | | Formats |
 |---|---|
-| **Input** | ttf, otf, woff, woff2, eot, svg |
-| **Output** | ttf, otf, woff, woff2 |
+| **Input** | `ttf` `otf` `woff` `woff2` `eot` `svg` |
+| **Output** | `ttf` `otf` `woff` `woff2` |
 
 ---
 
@@ -108,43 +115,34 @@ Convert any file instantly in the browser. Upload a file, pick an output format,
 
 ### Frontend
 
-![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=flat-square&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+| | |
+|---|---|
+| Framework | Next.js 15.3.1 (App Router) + React 19 |
+| Language | TypeScript 5.8.3 |
+| Styling | Tailwind CSS 4.1.4 — zero external UI libraries |
 
 ### Backend
 
-![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688?style=flat-square&logo=fastapi&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
-![Uvicorn](https://img.shields.io/badge/Uvicorn-0.30.6-499848?style=flat-square)
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.35-D71F00?style=flat-square)
-![aiosqlite](https://img.shields.io/badge/aiosqlite-0.20.0-gray?style=flat-square)
-![Celery](https://img.shields.io/badge/Celery-5.4.0-37814A?style=flat-square&logo=celery&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-5.1.1-DC382D?style=flat-square&logo=redis&logoColor=white)
-![Pydantic](https://img.shields.io/badge/Pydantic-2.9.2-E92063?style=flat-square&logo=pydantic&logoColor=white)
+| | |
+|---|---|
+| Framework | FastAPI 0.115.0 + Uvicorn 0.30.6 |
+| Language | Python 3.11 |
+| Database | SQLAlchemy 2.0 + aiosqlite (async SQLite) |
+| Task queue | Celery 5.4 + Redis 7 |
 
-### Conversion Tools
+### Conversion Libraries
 
-| Category | Tool | Version |
-|----------|------|---------|
-| Images | Pillow | 10.4.0 |
-| Images (advanced) | Wand / ImageMagick | 0.6.13 |
-| Audio / Video | FFmpeg + ffmpeg-python | 0.2.0 |
-| Office docs | python-pptx | 1.0.2 |
-| Word docs | python-docx | 1.1.2 |
-| Spreadsheets | openpyxl | 3.1.5 |
-| PDF | PyPDF + WeasyPrint + PyMuPDF + pdf2docx | 4.3.1 / 62.3 / 1.24 / 0.5.8 |
-| Ebooks | Calibre (`ebook-convert`) | CLI |
-| Archives | py7zr | 0.22.0 |
-| Data formats | PyYAML · toml · xmltodict | 6.0.2 / 0.10.2 / 0.13.0 |
-| Fonts | fontTools + Brotli + Zopfli | 4.54.1 |
-| AI insights | Groq (Llama 3.3 70B) | 1.2.0 |
-
-### Infrastructure
-
-![Docker](https://img.shields.io/badge/Docker_Compose-4_services-2496ED?style=flat-square&logo=docker&logoColor=white)
-![Railway](https://img.shields.io/badge/Deployed_on-Railway-0B0D0E?style=flat-square&logo=railway&logoColor=white)
+| Category | Library |
+|----------|---------|
+| Images | Pillow 10.4 · Wand / ImageMagick (SVG, EPS, PSD, RAW, HEIC) |
+| Documents | Pandoc · LibreOffice · PyMuPDF · pdf2docx · WeasyPrint |
+| Audio / Video | FFmpeg |
+| Office docs | python-docx · python-pptx · openpyxl |
+| Ebooks | Calibre (`ebook-convert` CLI) |
+| Archives | py7zr · zipfile · tarfile |
+| Data formats | PyYAML · toml · xmltodict |
+| Fonts | fontTools · Brotli · Zopfli |
+| AI insights | Groq SDK · Llama 3.3 70B |
 
 ---
 
@@ -154,7 +152,7 @@ Convert any file instantly in the browser. Upload a file, pick an output format,
 
 - [Docker](https://docs.docker.com/get-docker/) and Docker Compose
 
-### Run with Docker (recommended)
+### Run with Docker
 
 ```bash
 git clone https://github.com/ARSHIYASHAFIZADE/ALF.git
@@ -169,54 +167,70 @@ make dev
 | http://localhost:8000 | Backend API |
 | http://localhost:8000/docs | Swagger UI |
 
+To enable AI insights, add your Groq API key to `.env`:
+
+```env
+GROQ_API_KEY=your_key_here
+```
+
 ### Make Commands
 
 ```bash
-make dev          # Start with live logs
-make up           # Start in background
-make down         # Stop all services
-make logs         # Stream all logs
-make logs-backend # Backend logs only
-make clean        # Stop and remove volumes
+make dev           # Start all services with live logs
+make up            # Start in background
+make down          # Stop all services
+make build         # Rebuild images from scratch
+make logs          # Stream all logs
+make logs-backend  # API + worker logs only
+make clean         # Stop and remove volumes
+make shell-backend # Bash shell inside the API container
+make test-backend  # Run pytest inside the API container
 ```
 
 ### Local Development (without Docker)
 
-> Requires Redis, FFmpeg, LibreOffice, Pandoc, and Calibre installed locally.
+Requires **Redis**, **FFmpeg**, **LibreOffice**, **Pandoc**, **Calibre**, and **ImageMagick** installed locally.
 
 ```bash
-# Backend
+# Terminal 1 — Backend API
 cd backend
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 
-# Worker (separate terminal)
+# Terminal 2 — Celery worker
+cd backend
 celery -A app.tasks worker --loglevel=info --concurrency=2
 
-# Frontend (separate terminal)
+# Terminal 3 — Frontend
 cd frontend
 npm install
-npm run dev
+NEXT_PUBLIC_API_URL=http://localhost:8000 npm run dev
 ```
 
 ---
 
 ## Environment Variables
 
-Copy `.env.example` to `.env`:
+Copy `.env.example` to `.env` and adjust as needed:
 
 ```env
-# Backend
-REDIS_URL=redis://redis:6379/0
+# ── Backend ────────────────────────────────────
 DATABASE_URL=sqlite+aiosqlite:///./data/ash.db
+REDIS_URL=redis://redis:6379/0
+
 UPLOAD_DIR=/data/uploads
 OUTPUT_DIR=/data/outputs
 MAX_UPLOAD_SIZE_MB=100
+
 ALLOWED_ORIGINS=http://localhost:3000
 RATE_LIMIT_PER_MINUTE=20
 CLEANUP_AFTER_HOURS=1
 
-# Frontend
+# AI insights (optional — leave blank to disable)
+GROQ_API_KEY=
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# ── Frontend ───────────────────────────────────
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
@@ -228,33 +242,33 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/upload` | Upload file + select output format |
-| `POST` | `/api/convert/{job_id}` | Start conversion |
-| `GET` | `/api/job/{job_id}` | Poll job status and progress |
-| `GET` | `/api/download/{job_id}` | Download converted file |
+| `POST` | `/api/upload` | Upload a file and specify the output format — returns `jobId` |
+| `POST` | `/api/convert/{job_id}` | Start the conversion |
+| `GET` | `/api/job/{job_id}` | Poll job status and progress (0–100) |
+| `GET` | `/api/download/{job_id}` | Download the converted file |
 
 ### AI
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/ai/analyze-upload` | Inspect a file without creating a job — returns summary, recommended format, alternatives, tips, suggested filename |
+| `POST` | `/api/ai/analyze-upload` | Analyse a file before creating a job — returns summary, recommended format, alternatives, tips, suggested filename |
 | `POST` | `/api/ai/analyze/{job_id}` | Same analysis for an already-uploaded job |
 
 ### Formats
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/formats` | All formats grouped by category |
-| `GET` | `/api/formats/{input_format}` | Output formats for a given input |
-| `GET` | `/api/formats-list` | Flat lists of all input/output formats |
+| `GET` | `/api/formats` | All supported formats grouped by category |
+| `GET` | `/api/formats/{input_format}` | Available output formats for a given input |
+| `GET` | `/api/formats-list` | Flat lists of all input and output formats |
 
 ### Health
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/health` | Health check |
+| `GET` | `/health` | Returns `{"status": "healthy"}` |
 
-Full interactive docs at `/docs` (Swagger) when the backend is running.
+Full interactive docs at [`/docs`](http://localhost:8000/docs) (Swagger UI) when the backend is running.
 
 ---
 
@@ -262,48 +276,60 @@ Full interactive docs at `/docs` (Swagger) when the backend is running.
 
 ```
 ALF/
-├── frontend/                    # Next.js app
+├── frontend/
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── layout.tsx       # Root layout + metadata
-│   │   │   ├── page.tsx         # Main converter page
-│   │   │   └── globals.css      # Global styles + theme
+│   │   │   ├── layout.tsx            # Root layout + metadata
+│   │   │   ├── page.tsx              # Main converter page (upload → AI → pick → convert → download)
+│   │   │   └── globals.css           # Global styles + CSS variables
 │   │   ├── components/
 │   │   │   ├── Header.tsx
-│   │   │   ├── UploadZone.tsx   # Drag-and-drop upload
-│   │   │   ├── FormatPicker.tsx # Category tabs + format selection
-│   │   │   ├── ConversionProgress.tsx
-│   │   │   ├── FormatExplorer.tsx
-│   │   │   ├── HowItWorks.tsx
+│   │   │   ├── UploadZone.tsx        # Drag-and-drop file input
+│   │   │   ├── FileInfo.tsx          # Uploaded file name + size
+│   │   │   ├── AIInsight.tsx         # AI analysis card with typewriter animation
+│   │   │   ├── FormatPicker.tsx      # Category tabs + format selection grid
+│   │   │   ├── ConversionProgress.tsx # Real-time progress bar
+│   │   │   ├── FormatExplorer.tsx    # Browse all 120+ formats by category
+│   │   │   ├── HowItWorks.tsx        # Explainer modal
 │   │   │   └── Footer.tsx
 │   │   └── lib/
-│   │       ├── api.ts           # API client
-│   │       └── formats.ts       # Format metadata
-│   └── Dockerfile
+│   │       ├── api.ts                # Typed fetch wrappers for all endpoints
+│   │       └── formats.ts            # Format metadata (labels, icons, colours)
+│   ├── Dockerfile
+│   └── package.json
 │
-├── backend/                     # FastAPI app
+├── backend/
 │   ├── app/
-│   │   ├── main.py              # App setup + CORS + routes
-│   │   ├── config.py            # Settings / env
-│   │   ├── models.py            # ConversionJob SQLAlchemy model
+│   │   ├── main.py                   # FastAPI app — CORS, lifespan, route registration
+│   │   ├── config.py                 # Pydantic settings (reads .env)
+│   │   ├── models.py                 # ConversionJob SQLAlchemy model
+│   │   ├── database.py               # Async SQLite engine + session factory
 │   │   ├── converters/
-│   │   │   ├── base.py          # BaseConverter abstract class
-│   │   │   ├── registry.py      # Auto-discovery registry
-│   │   │   ├── image.py
-│   │   │   ├── document.py
-│   │   │   ├── audio_video.py
-│   │   │   ├── archive.py
-│   │   │   ├── data.py
-│   │   │   ├── ebook.py
-│   │   │   └── font.py
+│   │   │   ├── base.py               # BaseConverter abstract class
+│   │   │   ├── registry.py           # Auto-discovery + format routing
+│   │   │   ├── image.py              # Pillow + Wand / ImageMagick
+│   │   │   ├── document.py           # Pandoc + LibreOffice + PyMuPDF
+│   │   │   ├── audio_video.py        # FFmpeg (Audio and Video classes)
+│   │   │   ├── archive.py            # zipfile · tarfile · py7zr
+│   │   │   ├── data.py               # JSON · YAML · TOML · XML · CSV · INI
+│   │   │   ├── ebook.py              # Calibre ebook-convert CLI
+│   │   │   └── font.py               # fontTools
+│   │   ├── services/
+│   │   │   └── ai.py                 # File preview extraction + Groq/Llama call
 │   │   └── routers/
 │   │       ├── upload.py
 │   │       ├── convert.py
-│   │       └── formats.py
+│   │       ├── formats.py
+│   │       └── ai.py
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── docker-compose.yml           # 4 services: api, worker, redis, frontend
+├── docs/
+│   ├── demo.gif                      # Animated preview (README)
+│   ├── demo.mp4                      # Full demo video
+│   └── ai-insight.png                # AI card screenshot
+│
+├── docker-compose.yml                # api · worker · redis · frontend
 ├── Makefile
 └── .env.example
 ```
@@ -312,13 +338,23 @@ ALF/
 
 ## How It Works
 
-1. **Upload** — file sent to `/api/upload`, saved to disk, `ConversionJob` record created in SQLite
-2. **Convert** — `/api/convert/{job_id}` runs the converter in a thread pool with real-time progress updates
-3. **Poll** — frontend polls `/api/job/{job_id}` until `completed` or `failed`
-4. **Download** — `/api/download/{job_id}` streams the output file back
-5. **Cleanup** — files auto-deleted after 1 hour
+### Conversion flow
 
-Adding a new format: create a class inheriting `BaseConverter`, register it in `ConversionRegistry` — nothing else changes.
+1. **Drop a file** — the frontend calls `POST /api/ai/analyze-upload` immediately; the AI insight card animates in while the format picker loads in parallel
+2. **Pick a format** — the AI pre-selects its recommendation; you can override it with any of the 120+ format pills
+3. **Upload** — `POST /api/upload` saves the file and creates a `ConversionJob` record (status: `pending`)
+4. **Convert** — `POST /api/convert/{job_id}` runs the appropriate converter in a thread pool with real-time progress callbacks
+5. **Poll** — the frontend polls `GET /api/job/{job_id}` every second until `completed` or `failed`
+6. **Download** — `GET /api/download/{job_id}` streams the output file back
+7. **Cleanup** — both input and output files are deleted after 1 hour
+
+### Converter architecture
+
+Each category has one converter class that inherits `BaseConverter` and declares its `supported_input_formats` and `supported_output_formats`. The `ConversionRegistry` auto-discovers all converter classes at startup and routes any format pair to the right handler. To add a new format: create a subclass, add the format strings, done — nothing else changes.
+
+### AI analysis
+
+The `analyze` function in `services/ai.py` extracts a rich preview from each file type (PDF text, DOCX paragraphs, image colour palette + EXIF, audio codec details, EPUB metadata, archive manifest, font glyph count, etc.), then sends it to Llama 3.3 70B via Groq. The model returns structured JSON: summary, recommended format, two alternatives, tips, and a suggested filename. All format values are validated against the actual available output formats before the response is returned.
 
 ---
 
@@ -330,9 +366,8 @@ MIT
 
 <div align="center">
 
-*Built with Next.js · FastAPI · Celery · Redis · Docker*
+Built with Next.js · FastAPI · Celery · Redis · Docker
 
-[![GitHub](https://img.shields.io/badge/GitHub-ARSHIYASHAFIZADE-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ARSHIYASHAFIZADE)
-[![Live](https://img.shields.io/badge/Live-frontend--production--2bfcc.up.railway.app-6366f1?style=flat-square&logo=railway&logoColor=white)](https://frontend-production-2bfcc.up.railway.app)
+[![GitHub](https://img.shields.io/badge/GitHub-ARSHIYASHAFIZADE%2FALF-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ARSHIYASHAFIZADE/ALF)
 
 </div>
